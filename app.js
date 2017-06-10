@@ -17,39 +17,51 @@ var apiKey = "dc6zaTOxFJmzC";
 		function displayActorGif(){
 			var actorName = $(this).attr("data-name");
 			
-			var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + actorName + "&limit=10" + "&api_key=" + apiKey;
+			var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + actorName + "&limit=10&rating=g" + "&api_key=" + apiKey;
+
+			var gifURL = "";
 
 			$.ajax({
 				url: queryURL,
 				method: "GET"
-			}).done(function(response) {
-				//varible to hold response data
-				var results = response.data;
-					console.log(response);
-				
+			}).done(function(response) {								
 
-				// Saving the image_original_url property
-        var imageUrl = response.data[0].images.fixed_height_small.url;
-        console.log(imageUrl);
+						// Saving the image property
+		        var imageUrl = response.data[0].images.fixed_height_still.url;
+		        console.log(imageUrl);
+		        		//Saving the animated gif property
+		        var gifURL = response.data[0].images.fixed_height.url;
 
-        // Creating and storing an image tag
-        var actorGif = $("<img>");
+		        var rating = response.data[0].rating;
+		        console.log(rating);
 
-        // Setting the catImage src attribute to imageUrl
-        actorGif.attr("src", imageUrl);
-        actorGif.attr("alt", "cat image");
+		    
 
-        // Prepending the catImage to the images div
-        $("#images").prepend(actorGif);
+ 				//for loop that lists all 10 gifs 
+		        for(var i = 0; i<response.data.length; i++) {
+		        // inputs image and makes source gifURL
+		        $("#images").prepend("<img src='" + response.data[i].images.fixed_height_still.url +
+		        "' class='gifPic'>");
+		        		        
+		        // Adds the ratings line to the beginning of each image div
+		        $("#images").prepend("<p>Rating: " + response.data[i].rating + "</p>");
+			}
 
-        //$('#gifsDiv').html(JSON.stringify(response));
-			
-				renderButtons();
+      
+   	    //function for click even on gif to play
+			$(document).on("click", ".gifPic", function(event) {
+				console.log("working");
+				 if (src = "response.data[i].images.fixed_height_still.url") {
+				 	console.log("doubleworking");
+				 	$(this).attr("src", gifURL);
+				 	
+				 }
+			});
 
 
 			})
 		}
-		
+
 
 
 	//Function for displaying actor buttons
@@ -84,15 +96,6 @@ var apiKey = "dc6zaTOxFJmzC";
 		//makes sure buttons are rendered after being added
 		renderButtons();
 
-	//need to access the api and pass the information from the button into it
-
-
-
-	//capture what the api returns
-
-	//display the gifs from api
-
-	
 
 		
 //end of document.ready function
