@@ -17,7 +17,7 @@ var apiKey = "dc6zaTOxFJmzC";
 		function displayActorGif(){
 			var actorName = $(this).attr("data-name");
 			
-			var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + actorName + "&limit=10&rating=g" + "&api_key=" + apiKey;
+			var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + actorName + "&limit=10&rating=g" + "&api_key=" + apiKey;
 
 			var gifURL = "";
 
